@@ -49,16 +49,16 @@ public class PongGUI extends Application {
         KeyCode kc = event.getCode();
         switch (kc) {
             case UP:
-               // TODO
+                pong.setSpeedRightPaddle(-1);
                 break;
             case DOWN:
-                // TODO
+                pong.setSpeedRightPaddle(1);
                 break;
             case Q:
-                // TODO
+                pong.setSpeedLeftPaddle(-1);
                 break;
             case A:
-               // TODO
+                pong.setSpeedLeftPaddle(1);
                 break;
             default:  // Nothing
         }
@@ -72,11 +72,11 @@ public class PongGUI extends Application {
         switch (kc) {
             case UP:
             case DOWN:
-               // TODO
+                pong.setSpeedRightPaddle(0);
                 break;
             case A:
             case Q:
-              // TODO
+                pong.setSpeedLeftPaddle(0);
                 break;
             default: // Nothing
         }
@@ -112,8 +112,11 @@ public class PongGUI extends Application {
         Paddle leftPaddle = null;
 
         // TODO Construct the model
-        //
-        // Finally pong =
+        rightPaddle = new Paddle(GAME_WIDTH - 60, 50); //TODO TA BORT 60
+        leftPaddle = new Paddle(0, 50);
+        Ball ball = new Ball(1, GAME_WIDTH/2, GAME_HEIGHT/2);
+
+        pong = new Pong(ball, leftPaddle, rightPaddle);
 
         // Map objects to sprites
         assets.bind(rightPaddle, assets.rightPaddle);

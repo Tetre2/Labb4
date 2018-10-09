@@ -19,20 +19,27 @@ public class Pong {
     public static final double GAME_HEIGHT = 400;
     public static final double BALL_SPEED_FACTOR = 1.02;
     public static final long HALF_SEC = 500_000_000;
-
+    private Ball ball;
+    private Paddle leftPlayer;
+    private Paddle rigthPlayer;
 
     private int pointsLeft;
     private int pointsRight;
 
+    public Pong(Ball ball, Paddle leftPlayer, Paddle rigthPlayer) {
+        this.ball = ball;
+        this.leftPlayer = leftPlayer;
+        this.rigthPlayer = rigthPlayer;
+    }
 
-    // TODO Constructor
 
     // --------  Game Logic -------------
 
     private long timeForLastHit;         // To avoid multiple collisions
 
     public void update(long now) {
-
+        rigthPlayer.move();
+        leftPlayer.move();
       // TODO Most game logic here, i.e. move paddles etc.
     }
 
@@ -42,7 +49,9 @@ public class Pong {
 
     public List<IPositionable> getPositionables() {
         List<IPositionable> drawables = new ArrayList<>();
-        // TODO
+        drawables.add(ball);
+        drawables.add(rigthPlayer);
+        drawables.add(leftPlayer);
         return drawables;
     }
 
@@ -55,10 +64,10 @@ public class Pong {
     }
 
     public void setSpeedRightPaddle(double dy) {
-        // TODO
+        rigthPlayer.setSpeed(dy);
     }
 
     public void setSpeedLeftPaddle(double dy) {
-        // TODO
+        leftPlayer.setSpeed(dy);
     }
 }
