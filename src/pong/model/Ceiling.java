@@ -4,14 +4,13 @@ public class Ceiling {
 
     private final double x;
     private final double y;
-    private final double width;
-    private final double height;
+    private final double width = Pong.GAME_WIDTH;
+    private final double height = 50;
 
-    public Ceiling(int x, int y, int width, int height){
+    public Ceiling(double x, double y){
         this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
+        this.y = y - height;
+
     }
 
 

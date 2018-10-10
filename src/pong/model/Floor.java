@@ -4,14 +4,13 @@ public class Floor {
 
     private final double x;
     private final double y;
-    private final double width;
-    private final double height;
+    private final double width = Pong.GAME_WIDTH;
+    private final double height = 50;
 
-    public Floor(int x, int y, int width, int height){
+    public Floor(double x, double y){
         this.x = x;
         this.y = y;
-        this.width = width;
-        this.height = height;
+
     }
 
 }

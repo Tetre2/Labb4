@@ -117,8 +117,8 @@ public class PongGUI extends Application {
         rightPaddle = new Paddle(GAME_WIDTH - 60, 50); //TODO TA BORT 60
         leftPaddle = new Paddle(0, 50);
         Ball ball = new Ball( GAME_WIDTH/2, GAME_HEIGHT/2);
-        ceiling = new Ceiling();
-        floor = new Floor();
+        ceiling = new Ceiling(0,0);
+        floor = new Floor(0, GAME_HEIGHT);
 
         pong = new Pong(ball, leftPaddle, rightPaddle, floor, ceiling);
 
