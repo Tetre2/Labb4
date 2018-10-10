@@ -16,7 +16,7 @@ public class Test {
     }
 
     void test() {
-        Ball b = new Ball( 3, 3, 3 );
+        //Ball b = new Ball( 3, 3, 3 );
 
         // Create an object  ...
         // .. call methods to test.

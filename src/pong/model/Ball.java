@@ -14,25 +14,44 @@ public class Ball implements IPositionable {
     public static final double WIDTH = 40;
     public static final double HEIGT = 40;
     private double speed;
-    private int directionX;
-    private int directionY;
-    private float velocityX;
-    private float velocityY;
+    private double directionX;
+    private double directionY;
+
+
     private double x;
     private double y;
 
-    public Ball(double speed, double x, double y) {
-        this.speed = speed;
+
+    public Ball(double x, double y) {
+        Random r = new Random();
+
+        this.speed = (r.nextDouble() * 2) + 1;
         this.x = x;
         this.y = y;
+
+
+        this.directionX = (r.nextDouble()*2) - 1;
+        this.directionY = (r.nextDouble()*2) - 1;
+
+
     }
 
 
-    private void isColliding(){
+    private void isColliding() {
 
     }
 
-    public void incSpeed(){
+    public boolean isOutOfBounds() {
+        return x < - WIDTH * 1.5 ||
+               x > GAME_WIDTH + WIDTH * 0.5;
+    }
+
+    public void move() {
+        y += directionY * speed;
+        x += directionX * speed;
+    }
+
+    public void incSpeed() {
 
     }
 

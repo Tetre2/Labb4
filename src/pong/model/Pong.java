@@ -22,14 +22,18 @@ public class Pong {
     private Ball ball;
     private Paddle leftPlayer;
     private Paddle rigthPlayer;
+    private Floor floor;
+    private Ceiling ceiling;
 
     private int pointsLeft;
     private int pointsRight;
 
-    public Pong(Ball ball, Paddle leftPlayer, Paddle rigthPlayer) {
+    public Pong(Ball ball, Paddle leftPlayer, Paddle rightPaddle, Floor floor, Ceiling ceiling) {
         this.ball = ball;
         this.leftPlayer = leftPlayer;
-        this.rigthPlayer = rigthPlayer;
+        this.rigthPlayer = rightPaddle;
+        this.floor = floor;
+        this.ceiling = ceiling;
     }
 
 
@@ -40,7 +44,20 @@ public class Pong {
     public void update(long now) {
         rigthPlayer.move();
         leftPlayer.move();
+        ball.move();
+        if(ball.isOutOfBounds()){
+            addPoints();
+            ball = new Ball( GAME_WIDTH/2, GAME_HEIGHT/2);
+        }
       // TODO Most game logic here, i.e. move paddles etc.
+    }
+
+    private void addPoints(){
+        if(ball.getX() < GAME_WIDTH / 2){
+            pointsRight++;
+        }else {
+            pointsLeft++;
+        }
     }
 
 
@@ -52,6 +69,7 @@ public class Pong {
         drawables.add(ball);
         drawables.add(rigthPlayer);
         drawables.add(leftPlayer);
+
         return drawables;
     }
 

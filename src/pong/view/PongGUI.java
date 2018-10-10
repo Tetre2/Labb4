@@ -110,13 +110,17 @@ public class PongGUI extends Application {
         // Build the model
         Paddle rightPaddle = null;  // For now
         Paddle leftPaddle = null;
+        Ceiling ceiling = null;
+        Floor floor = null;
 
         // TODO Construct the model
         rightPaddle = new Paddle(GAME_WIDTH - 60, 50); //TODO TA BORT 60
         leftPaddle = new Paddle(0, 50);
-        Ball ball = new Ball(1, GAME_WIDTH/2, GAME_HEIGHT/2);
+        Ball ball = new Ball( GAME_WIDTH/2, GAME_HEIGHT/2);
+        ceiling = new Ceiling();
+        floor = new Floor();
 
-        pong = new Pong(ball, leftPaddle, rightPaddle);
+        pong = new Pong(ball, leftPaddle, rightPaddle, floor, ceiling);
 
         // Map objects to sprites
         assets.bind(rightPaddle, assets.rightPaddle);
