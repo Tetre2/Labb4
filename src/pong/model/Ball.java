@@ -9,69 +9,38 @@ import static pong.model.Pong.GAME_WIDTH;
  * A Ball for the Pong game
  * A model class
  */
-public class Ball implements IPositionable {
+public class Ball extends AbstractMovable {
 
     public static final double WIDTH = 40;
-    public static final double HEIGT = 40;
-    private double speed;
-    private double directionX;
-    private double directionY;
+    public static final double HEIGHT = 40;
 
+    public Ball(double x, double y, double dx, double dy, double width, double height, double speed) {
+        super(x, y, dx, dy, width, height, speed);
 
-    private double x;
-    private double y;
-
-
-    public Ball(double x, double y) {
         Random r = new Random();
-
-        this.speed = (r.nextDouble() * 2) + 1;
-        this.x = x;
-        this.y = y;
-
-
-        this.directionX = (r.nextDouble()*2) - 1;
-        this.directionY = (r.nextDouble()*2) - 1;
-
+        setDx(((r.nextDouble()*2) - 1));
+        setDy(((r.nextDouble()*2) - 1));
 
     }
 
-
-    private void isColliding() {
-
+    public Ball(double x, double y, double speed) {
+        this(x, y, 0,0 , WIDTH, HEIGHT, speed);
     }
+
 
     public boolean isOutOfBounds() {
-        return x < - WIDTH * 1.5 ||
-               x > GAME_WIDTH + WIDTH * 0.5;
+        return getX() < - WIDTH * 1.5 ||
+                getX() > GAME_WIDTH + WIDTH * 0.5;
     }
 
     public void move() {
-        y += directionY * speed;
-        x += directionX * speed;
+        setY(getY() + getDy() * getSpeed());
+        setX(getX() + getDx() * getSpeed());
     }
 
     public void incSpeed() {
-
+        setSpeed(getSpeed() * 1.05);
     }
 
-    @Override
-    public double getX() {
-        return x;
-    }
 
-    @Override
-    public double getY() {
-        return y;
-    }
-
-    @Override
-    public double getWidth() {
-        return WIDTH;
-    }
-
-    @Override
-    public double getHeight() {
-        return HEIGT;
-    }
 }

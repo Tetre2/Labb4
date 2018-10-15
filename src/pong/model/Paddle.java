@@ -7,52 +7,29 @@ import static pong.model.Pong.GAME_HEIGHT;
  * A model class
  *
  */
-public class Paddle implements IPositionable {
+public class Paddle extends AbstractMovable {
 
     public static final double PADDLE_WIDTH = 10;
     public static final double PADDLE_HEIGHT = 60;
     public static final double PADDLE_SPEED = 5;
-    private double velocity;
-    private final double x;
-    private double y;
 
-    public Paddle(double x, double y) {
-        this.x = x;
-        this.y = y;
+    public Paddle(double x, double y, double dx, double dy, double width, double height) {
+        super(x, y, dx, dy, width, height, PADDLE_SPEED);
     }
 
+    public Paddle(double x, double y) {
+        this(x, y, 0,0 , PADDLE_WIDTH, PADDLE_HEIGHT);
+    }
 
-
-    public void setSpeed(double d){
-        velocity = PADDLE_SPEED*d;
+    public void setDir(double d){
+        setDy(getSpeed()*d);
     }
 
     public void move(){
-        y += velocity;
-    }
-
-
-    private void colliding(){
+        if(getY() + getDy() > 0 && getY() + getDy() + PADDLE_HEIGHT < Pong.GAME_HEIGHT){
+            setY(getY() + getDy());
+        }
 
     }
 
-    @Override
-    public double getX() {
-        return x;
-    }
-
-    @Override
-    public double getY() {
-        return y;
-    }
-
-    @Override
-    public double getWidth() {
-        return PADDLE_WIDTH;
-    }
-
-    @Override
-    public double getHeight() {
-        return PADDLE_HEIGHT;
-    }
 }

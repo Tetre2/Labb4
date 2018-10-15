@@ -22,44 +22,55 @@ public class Pong {
     private Ball ball;
     private Paddle leftPlayer;
     private Paddle rigthPlayer;
-    private Floor floor;
-    private Ceiling ceiling;
+    private List<Wall> walls;
 
     private int pointsLeft;
     private int pointsRight;
 
-    public Pong(Ball ball, Paddle leftPlayer, Paddle rightPaddle, Floor floor, Ceiling ceiling) {
+    public Pong(Ball ball, Paddle leftPlayer, Paddle rightPaddle, List<Wall> walls) {
+        this.walls = walls;
         this.ball = ball;
         this.leftPlayer = leftPlayer;
         this.rigthPlayer = rightPaddle;
-        this.floor = floor;
-        this.ceiling = ceiling;
     }
 
 
     // --------  Game Logic -------------
 
-    private long timeForLastHit;         // To avoid multiple collisions
+    private long timeForLastHit = 0;         // To avoid multiple collisions
 
     public void update(long now) {
-        rigthPlayer.move();
-        leftPlayer.move();
         ball.move();
-        if(ball.isOutOfBounds()){
+        leftPlayer.move();
+        rigthPlayer.move();
+        if (ball.isOutOfBounds()) {
             addPoints();
-            ball = new Ball( GAME_WIDTH/2, GAME_HEIGHT/2);
+            ball = new Ball(GAME_WIDTH / 2, GAME_HEIGHT / 2, 5);
         }
-      // TODO Most game logic here, i.e. move paddles etc.
+        for (Wall w : walls) {
+            if (ball.intersect(w)) {
+                ball.setDy(-ball.getDy());
+            }
+        }
+
+        if(now - timeForLastHit > HALF_SEC){
+            if (ball.intersect(leftPlayer) || ball.intersect(rigthPlayer)) {
+                timeForLastHit = now;
+                ball.setDx(-ball.getDx());
+                ball.incSpeed();
+            }
+        }
+
+        // TODO Most game logic here, i.e. move paddles etc.
     }
 
-    private void addPoints(){
-        if(ball.getX() < GAME_WIDTH / 2){
+    private void addPoints() {
+        if (ball.getX() < GAME_WIDTH / 2) {
             pointsRight++;
-        }else {
+        } else {
             pointsLeft++;
         }
     }
-
 
 
     // --- Used by GUI  ------------------------
@@ -81,11 +92,11 @@ public class Pong {
         return pointsRight;
     }
 
-    public void setSpeedRightPaddle(double dy) {
-        rigthPlayer.setSpeed(dy);
+    public void setDirRightPaddle(double dy) {
+        rigthPlayer.setDir(dy);
     }
 
-    public void setSpeedLeftPaddle(double dy) {
-        leftPlayer.setSpeed(dy);
+    public void setDirLeftPaddle(double dy) {
+        leftPlayer.setDir(dy);
     }
 }

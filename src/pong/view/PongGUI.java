@@ -21,8 +21,10 @@ import pong.event.EventService;
 import pong.view.theme.Cool;
 import pong.view.theme.Duckie;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static java.lang.System.out;
-import static pong.model.Paddle.PADDLE_SPEED;
 import static pong.model.Pong.GAME_HEIGHT;
 import static pong.model.Pong.GAME_WIDTH;
 
@@ -49,16 +51,16 @@ public class PongGUI extends Application {
         KeyCode kc = event.getCode();
         switch (kc) {
             case UP:
-                pong.setSpeedRightPaddle(-1);
+                pong.setDirRightPaddle(-1);
                 break;
             case DOWN:
-                pong.setSpeedRightPaddle(1);
+                pong.setDirRightPaddle(1);
                 break;
             case Q:
-                pong.setSpeedLeftPaddle(-1);
+                pong.setDirLeftPaddle(-1);
                 break;
             case A:
-                pong.setSpeedLeftPaddle(1);
+                pong.setDirLeftPaddle(1);
                 break;
             default:  // Nothing
         }
@@ -72,11 +74,11 @@ public class PongGUI extends Application {
         switch (kc) {
             case UP:
             case DOWN:
-                pong.setSpeedRightPaddle(0);
+                pong.setDirRightPaddle(0);
                 break;
             case A:
             case Q:
-                pong.setSpeedLeftPaddle(0);
+                pong.setDirLeftPaddle(0);
                 break;
             default: // Nothing
         }
@@ -110,17 +112,18 @@ public class PongGUI extends Application {
         // Build the model
         Paddle rightPaddle = null;  // For now
         Paddle leftPaddle = null;
-        Ceiling ceiling = null;
-        Floor floor = null;
+        Wall ceiling = null;
+        Wall floor = null;
 
         // TODO Construct the model
-        rightPaddle = new Paddle(GAME_WIDTH - 60, 50); //TODO TA BORT 60
-        leftPaddle = new Paddle(0, 50);
-        Ball ball = new Ball( GAME_WIDTH/2, GAME_HEIGHT/2);
-        ceiling = new Ceiling(0,0);
-        floor = new Floor(0, GAME_HEIGHT);
+        rightPaddle = new Paddle(GAME_WIDTH - 20, 50); //TODO TA BORT 10
+        leftPaddle = new Paddle(10, 50);
+        Ball ball = new Ball( GAME_WIDTH/2, GAME_HEIGHT/2, 5);
+        ceiling = new Wall(0,-20); //TODO implementera bättre lösning (hej)
+        floor = new Wall(0, GAME_HEIGHT);
+        List<Wall> walls = Arrays.asList(ceiling, floor);
 
-        pong = new Pong(ball, leftPaddle, rightPaddle, floor, ceiling);
+        pong = new Pong(ball, leftPaddle, rightPaddle, walls);
 
         // Map objects to sprites
         assets.bind(rightPaddle, assets.rightPaddle);
